@@ -38,6 +38,7 @@ public class UserPixServiceImpl implements UserPixService {
     @Override
     public UserPixDTO create(UserPixDTO userPixDTO) throws DuplicateKeyException {
         try {
+            log.info("entrando no fluxo de criação de chaves");
             userPixDTO.setInsertTime(LocalDateTime.now());
             userPixDTO.setTypeKey(VerifyTypeKeyUtils.fillType(userPixDTO.getKeyInformation()));
             return mapper.fromEntityToDTO(userPixRepository.save(mapper.fromDtoToEntity(userPixDTO)));
@@ -46,14 +47,17 @@ public class UserPixServiceImpl implements UserPixService {
         }
     }
 
+
     @Override
     public UserPixDTO update(UserPixDTO userPixDTO) throws KeyNotFoundException {
         UserPixEntity userPixEntity = userPixRepository.findByKeyInformation(userPixDTO.getKeyInformation());
+        log.info("atualizando dados para a chave [{}]", userPixDTO.getKeyInformation());
         if (verifyIfExist(userPixDTO.getKeyInformation())) {
             if (userPixEntity.getInactivateTime() != null) {
                 throw new UpdatedInactiveKeyException("Uma chave inativa não pode ser atualizada");
             }
             userPixRepository.save(UserPixEntity.build(userPixDTO, userPixEntity));
+            log.info("Dados atualizados com sucesso");
             return mapper.fromEntityToDTO(userPixRepository.findByKeyInformation(userPixDTO.getKeyInformation()));
         } else {
             throw new KeyNotFoundException("A chave não existe");
@@ -91,9 +95,12 @@ public class UserPixServiceImpl implements UserPixService {
     }
 
     private Boolean verifyStateKey(UserPixEntity userPixEntity) throws InactivateKeyException {
+        log.info("verificando o status da chave");
         if (userPixEntity.getInactivateTime() == null) {
+            log.info("A chave [{}] está ativa", userPixEntity.getKeyInformation());
             return Boolean.TRUE;
         }
+        log.info("A chave [{}] está inativa", userPixEntity.getKeyInformation());
         return Boolean.FALSE;
     }
 
