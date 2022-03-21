@@ -19,4 +19,6 @@ public interface UserPixService {
     UserPixDTO delete(UUID id) throws InactivateKeyException, KeyNotFoundException;
 
     List<UserPixDTO> findByTypeKey(String typeKey);
+
+    List<UserPixDTO> findByHolderName(String holderName);
 }

@@ -50,4 +50,9 @@ public class PixController {
     public List<UserPixDTO> findByTypeKey(@RequestParam String typeKey){
         return userPixService.findByTypeKey(typeKey);
     }
+
+    @GetMapping(LIST_ALL_BY_HOLDER_NAME)
+    public List<UserPixDTO> findByHolderName(@RequestParam String holderName) {
+        return userPixService.findByHolderName(holderName);
+    }
 }

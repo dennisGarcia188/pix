@@ -11,6 +11,8 @@ public final class Constants {
 
     public static final String LIST_ALL_BY_TYPE_KEY = "/listAllByTypeKey";
 
+    public static final String LIST_ALL_BY_HOLDER_NAME = "/listAllByHolderName";
+
     public static final String TYPE_KEY_CELPHONE = "CELULAR";
 
     public static final String TYPE_KEY_EMAIL = "EMAIL";

@@ -14,7 +14,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8085/pix/actions",
+							"raw": "http://localhost:8085/pix/actions?key=32510328018",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -23,6 +23,12 @@
 							"path": [
 								"pix",
 								"actions"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "32510328018"
+								}
 							]
 						}
 					},
@@ -34,7 +40,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8085/pix/actions",
+							"raw": "http://localhost:8085/pix/actions/listAllByTypeKey?typeKey=ALEATORIA",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -42,7 +48,41 @@
 							"port": "8085",
 							"path": [
 								"pix",
-								"actions"
+								"actions",
+								"listAllByTypeKey"
+							],
+							"query": [
+								{
+									"key": "typeKey",
+									"value": "ALEATORIA"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listAllByHolderName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/pix/actions/listAllByHolderName?holderName=Michel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"pix",
+								"actions",
+								"listAllByHolderName"
+							],
+							"query": [
+								{
+									"key": "holderName",
+									"value": "Michel"
+								}
 							]
 						}
 					},
@@ -60,7 +100,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"typeKey\": \"cpf\",\n    \"key\": \"40235662844\",\n    \"agencyNumber\": 1234,\n    \"accontNumber\": 10203040,\n    \"holderName\": \"Dennis\",\n    \"holderLastName\": \"Garcia\"\n}",
+							"raw": "{\n    \"keyInformation\": \"kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk\",\n    \"accountType\":\"corrente\",\n    \"agencyNumber\":\"129\",\n    \"accountNumber\":\"123452220\",\n    \"holderName\": \"Alexander\",\n    \"holderLastName\": \"Garcia\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -94,7 +134,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"typeKey\": \"cpf\",\n    \"key\": \"40235662844\",\n    \"agencyNumber\": 1234,\n    \"accontNumber\": 10203040,\n    \"holderName\": \"Dennis\",\n    \"holderLastName\": \"Garcia\"\n}",
+							"raw": "{\n    \"keyInformation\": \"43251038000140\",\n    \"agencyNumber\": 1234,\n    \"accountNumber\": 1020304050,\n    \"holderName\": \"Alexander Michel\",\n    \"holderLastName\": \"Inocencio Garcia\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -121,17 +161,8 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"typeKey\": \"cpf\",\n    \"key\": \"40235662844\",\n    \"agencyNumber\": 1234,\n    \"accontNumber\": 10203040,\n    \"holderName\": \"Dennis\",\n    \"holderLastName\": \"Garcia\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:8085/pix/actions",
+							"raw": "http://localhost:8085/pix/actions/inactivate?id=feba73dc-e1cb-4a87-9e4e-26fb8ef08793",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -139,7 +170,14 @@
 							"port": "8085",
 							"path": [
 								"pix",
-								"actions"
+								"actions",
+								"inactivate"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "feba73dc-e1cb-4a87-9e4e-26fb8ef08793"
+								}
 							]
 						}
 					},

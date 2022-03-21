@@ -29,7 +29,7 @@ public class UserPixServiceImpl implements UserPixService {
     @Override
     public UserPixDTO findByKey(String key) throws KeyNotFoundException {
         UserPixEntity userPixEntity = userPixRepository.findByKeyInformation(key);
-        if(null == userPixEntity){
+        if (null == userPixEntity) {
             throw new KeyNotFoundException("Não foi encontrado nenhum registro para essa chave");
         }
         return mapper.fromEntityToDTO(userPixEntity);
@@ -48,26 +48,16 @@ public class UserPixServiceImpl implements UserPixService {
 
     @Override
     public UserPixDTO update(UserPixDTO userPixDTO) throws KeyNotFoundException {
+        UserPixEntity userPixEntity = userPixRepository.findByKeyInformation(userPixDTO.getKeyInformation());
         if (verifyIfExist(userPixDTO.getKeyInformation())) {
-            UserPixEntity userPixEntity = userPixRepository.findByKeyInformation(userPixDTO.getKeyInformation());
-            if(userPixEntity.getInactivateTime() != null){
+            if (userPixEntity.getInactivateTime() != null) {
                 throw new UpdatedInactiveKeyException("Uma chave inativa não pode ser atualizada");
             }
-            userPixRepository.save(build(userPixDTO));
+            userPixRepository.save(UserPixEntity.build(userPixDTO, userPixEntity));
             return mapper.fromEntityToDTO(userPixRepository.findByKeyInformation(userPixDTO.getKeyInformation()));
         } else {
             throw new KeyNotFoundException("A chave não existe");
         }
-    }
-
-    private UserPixEntity build(UserPixDTO userPixDTO) {
-        UserPixEntity userPixEntity = userPixRepository.findByKeyInformation(userPixDTO.getKeyInformation());
-        userPixEntity.setAccountNumber(userPixDTO.getAccountNumber());
-        userPixEntity.setAgencyNumber(userPixDTO.getAgencyNumber());
-        userPixEntity.setHolderLastName(userPixDTO.getHolderLastName());
-        userPixEntity.setHolderName(userPixDTO.getHolderName());
-        userPixEntity.setInactivateTime(userPixDTO.getInactivateTime() != null ? userPixDTO.getInactivateTime() : null);
-        return userPixEntity;
     }
 
     private Boolean verifyIfExist(String key) {
@@ -81,7 +71,7 @@ public class UserPixServiceImpl implements UserPixService {
         if (verifyStateKey(userPixEntity)) {
             if (verifyIfExist(userPixEntity.getKeyInformation())) {
                 userPixEntity.setInactivateTime(LocalDateTime.now());
-                return mapper.fromEntityToDTO(userPixRepository.save(build(mapper.fromEntityToDTO(userPixEntity))));
+                return mapper.fromEntityToDTO(userPixRepository.save(UserPixEntity.build(mapper.fromEntityToDTO(userPixEntity), userPixEntity)));
             } else {
                 throw new KeyNotFoundException("A chave não existe");
             }
@@ -95,10 +85,16 @@ public class UserPixServiceImpl implements UserPixService {
         return mapper.fromEntityToDTOlist(userPixRepository.findByTypeKey(typeKey));
     }
 
+    @Override
+    public List<UserPixDTO> findByHolderName(String holderName) {
+        return mapper.fromEntityToDTOlist(userPixRepository.findByHolderName(holderName));
+    }
+
     private Boolean verifyStateKey(UserPixEntity userPixEntity) throws InactivateKeyException {
         if (userPixEntity.getInactivateTime() == null) {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
     }
+
 }
