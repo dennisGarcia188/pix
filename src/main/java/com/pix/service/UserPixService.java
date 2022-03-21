@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface UserPixService {
 
-    UserPixDTO findByKey(String key);
+    UserPixDTO findByKey(String key) throws KeyNotFoundException;
 
     UserPixDTO create(UserPixDTO userPixDTO) throws DuplicateKeyException;
 

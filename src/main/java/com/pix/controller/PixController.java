@@ -25,7 +25,7 @@ public class PixController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public UserPixDTO findByKey(@RequestParam String key) {
+    public UserPixDTO findByKey(@RequestParam String key) throws KeyNotFoundException {
         return userPixService.findByKey(key);
     }
 

@@ -27,8 +27,12 @@ public class UserPixServiceImpl implements UserPixService {
     private final UserPixMapper mapper;
 
     @Override
-    public UserPixDTO findByKey(String key) {
-        return mapper.fromEntityToDTO(userPixRepository.findByKeyInformation(key));
+    public UserPixDTO findByKey(String key) throws KeyNotFoundException {
+        UserPixEntity userPixEntity = userPixRepository.findByKeyInformation(key);
+        if(null == userPixEntity){
+            throw new KeyNotFoundException("Não foi encontrado nenhum registro para essa chave");
+        }
+        return mapper.fromEntityToDTO(userPixEntity);
     }
 
     @Override
