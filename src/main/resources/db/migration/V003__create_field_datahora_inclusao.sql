@@ -1,0 +1,1 @@
+ALTER TABLE USER_PIX ADD COLUMN  insert_time timestamp NOT NULL;

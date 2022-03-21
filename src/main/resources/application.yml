@@ -1,0 +1,34 @@
+server:
+  port: 8085
+  error:
+    include:
+      binding:
+        errors: always
+  servlet:
+    contextPath: /pix
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pix?createDatabaseIfNotExist=true&stringtype=unspecified
+    username: postgres
+    password: postgres
+    class: org.postgresql.Driver
+
+  flyway:
+    url: jdbc:postgresql://localhost:5432/pix?createDatabaseIfNotExist=true
+    user: postgres
+    password: postgres
+    locations: classpath:db/migration
+    enabled: true
+    baselineOnMigrate: true
+    table: FLYWAY_SCHEMA_HISTORY
+    sqlMigrationPrefix: V
+    sqlMigrationSeparator: __
+    sql-migration-suffixes: .sql
+    mixed: true
+
+
+
+
+
+
